@@ -11,7 +11,7 @@
 
 1. Descargá e instalá **Visual Studio Code** desde ```https://code.visualstudio.com/```
     - Adicionalmente, se recomienda la instalación de las siguientes extensiones para facilitar el desarrollo:
-        - After Dark.
+        -  Dark.
         - Prettier - Code formatter.
         - Pylance.
         - Python.
