@@ -4,29 +4,12 @@ from ..transport import transport
 from ..persistence import repositories
 from ..utilities import translator
 from django.contrib.auth import get_user
-
-import requests
-from ...config import config
+from ..utilities.translator import fromRequestIntoCard
 # función que devuelve un listado de cards. Cada card representa una imagen de la API de HP.
-def getAllImages(requests):
-    raw_data = requests.get(config.STUDENTS_REST_API_URL).json()
-
-    json_collection = []
-
-    # si la búsqueda no arroja resultados, entonces retornamos una lista vacía de elementos.
-    if 'error' in raw_data:
-        print("[transport.py]: la búsqueda no arrojó resultados.")
-        return json_collection
-
-    for object in raw_data:
-        try:
-            json_collection.append(object)
-
-        except KeyError: 
-            pass
-
-    return json_collection  
-    
+def getAllImages():
+    raw_images = transport.getAllImages()
+    card_collection = [fromRequestIntoCard(image) for image in raw_images]
+    return card_collection
     # debe ejecutar los siguientes pasos:
     # 1) traer un listado de imágenes crudas desde la API (ver transport.py)
     # 2) convertir cada img. en una card.
