@@ -1,5 +1,3 @@
-# capa de vista/presentación
-
 from django.shortcuts import redirect, render
 from .layers.services import services
 from django.contrib.auth.decorators import login_required
@@ -10,6 +8,7 @@ def index_page(request):
 
 # esta función obtiene 2 listados: uno de las imágenes de la API y otro de favoritos, ambos en formato Card, y los dibuja en el template 'home.html'.
 def home(request):
+    # Obténemos las imágenes, con los nombres aleatorios
     images = services.getAllImages()
     favourite_list = []
 
@@ -19,8 +18,7 @@ def home(request):
 def search(request):
     name = request.POST.get('query', '')
 
-    # si el usuario ingresó algo en el buscador, se deben filtrar las imágenes por dicho ingreso.
-    if (name != ''):
+    if name != '':
         images = []
         favourite_list = []
 

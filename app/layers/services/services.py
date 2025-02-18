@@ -5,10 +5,25 @@ from ..persistence import repositories
 from ..utilities import translator
 from django.contrib.auth import get_user
 from ..utilities.translator import fromRequestIntoCard
+import random
 # función que devuelve un listado de cards. Cada card representa una imagen de la API de HP.
 def getAllImages():
-    raw_images = transport.getAllImages()
-    card_collection = [fromRequestIntoCard(image) for image in raw_images]
+    raw_images = transport.getAllImages()  # Aca obtenemos las imágenes crudas desde la API
+    card_collection = []
+
+    for image in raw_images:
+        card = fromRequestIntoCard(image)  # Convertimos cada imagen en una card
+
+        # Verificamos si hay nombres alternativos
+        if card.alternate_names:
+            # Si tiene nombres alternativos, elige uno aleatoriamente
+            card.alternate_name_random = random.choice(card.alternate_names)
+        else:
+            # Si no tiene, mostramos un mensaje
+            card.alternate_name_random = "No hay nombres alternativos disponibles"
+
+        card_collection.append(card)
+
     return card_collection
     # debe ejecutar los siguientes pasos:
     # 1) traer un listado de imágenes crudas desde la API (ver transport.py)
